@@ -1,5 +1,7 @@
 # Agent Security Radar
 
+[![Validate radar catalog](https://github.com/jearthliu/agent-security-radar/actions/workflows/validate.yml/badge.svg)](https://github.com/jearthliu/agent-security-radar/actions/workflows/validate.yml)
+
 A practical research radar for turning agent-security papers and incidents into engineering controls.
 
 ## Latest radar
@@ -16,8 +18,10 @@ Five direct-source papers are mapped to the agent lifecycle with facts, engineer
 | [Risk taxonomy](docs/risk-taxonomy.md) | Threats and controls across the agent lifecycle |
 | [Research method](docs/research-method.md) | Source, inclusion, evidence, and stop rules |
 | [Paper catalog](data/papers.json) | Machine-readable metadata for reviewed papers |
+| [Catalog schema](data/papers.schema.json) | JSON Schema for structure and lifecycle vocabulary |
 | [Report template](templates/radar-report.md) | Reusable daily or weekly format |
 | [Catalog validator](scripts/validate_catalog.py) | Lightweight structural validation |
+| [Validation tests](tests/test_validate_catalog.py) | Regression coverage for date and lifecycle rules |
 | [Contributing](CONTRIBUTING.md) | How to propose a paper or correction |
 
 ## Scope
@@ -54,9 +58,16 @@ Findings are mapped to one or more stages rather than grouped under an undiffere
 ## Validate the catalog
 
 ```bash
+check-jsonschema --schemafile data/papers.schema.json data/papers.json
+python3 -m unittest discover -s tests -v
 python3 scripts/validate_catalog.py data/papers.json
 ```
 
 The validator checks structure, unique identifiers, direct HTTPS sources, and the exact-five invariant used by the current public report.
 
 > Direct sources first. Facts, inference, and unknowns stay separate.
+
+## License
+
+- Code, tests, workflows, and schema implementation: [Apache-2.0](LICENSE)
+- Reports, catalog data, templates, and research documents: [CC BY 4.0](CONTENT_LICENSE.md)

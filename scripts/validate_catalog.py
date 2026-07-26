@@ -18,6 +18,24 @@ REQUIRED_PAPER_FIELDS = {
     "url",
 }
 
+ALLOWED_LIFECYCLE_STAGES = {
+    "authorization",
+    "context",
+    "evaluation",
+    "execution",
+    "input",
+    "memory",
+    "model-response",
+    "planning",
+    "reasoning",
+    "reconciliation",
+    "red-teaming",
+    "retrieval",
+    "safety-training",
+    "tool-execution",
+    "tool-selection",
+}
+
 
 def fail(message: str) -> None:
     raise ValueError(message)
@@ -25,6 +43,14 @@ def fail(message: str) -> None:
 
 def validate(path: Path) -> None:
     payload = json.loads(path.read_text(encoding="utf-8"))
+    report_date = date.fromisoformat(payload["report_date"])
+    window = payload["window"]
+    window_start = date.fromisoformat(window["start"])
+    window_end = date.fromisoformat(window["end"])
+
+    if not window_start <= report_date <= window_end:
+        fail("report_date must fall within the research window")
+
     papers = payload.get("papers")
 
     if not isinstance(papers, list):
@@ -60,6 +86,12 @@ def validate(path: Path) -> None:
             fail(f"paper {index} URL does not match arXiv id")
         if not isinstance(stages, list) or not stages:
             fail(f"paper {index} requires at least one lifecycle stage")
+        unsupported_stages = set(stages) - ALLOWED_LIFECYCLE_STAGES
+        if unsupported_stages:
+            fail(
+                f"paper {index} has unsupported lifecycle stage: "
+                f"{sorted(unsupported_stages)}"
+            )
 
         date.fromisoformat(submitted)
         seen_ids.add(arxiv_id)

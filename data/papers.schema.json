@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jearthliu/agent-security-radar/raw/main/data/papers.schema.json",
+  "title": "Agent Security Radar paper catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_date", "window", "papers"],
+  "properties": {
+    "report_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "timezone"],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        },
+        "timezone": {
+          "const": "Asia/Shanghai"
+        }
+      }
+    },
+    "papers": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "arxiv_id",
+          "title",
+          "submitted",
+          "lifecycle_stages",
+          "url"
+        ],
+        "properties": {
+          "arxiv_id": {
+            "type": "string",
+            "pattern": "^[0-9]{4}\\.[0-9]{5}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "submitted": {
+            "type": "string",
+            "format": "date"
+          },
+          "lifecycle_stages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "authorization",
+                "context",
+                "evaluation",
+                "execution",
+                "input",
+                "memory",
+                "model-response",
+                "planning",
+                "reasoning",
+                "reconciliation",
+                "red-teaming",
+                "retrieval",
+                "safety-training",
+                "tool-execution",
+                "tool-selection"
+              ]
+            }
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https://arxiv\\.org/abs/[0-9]{4}\\.[0-9]{5}$"
+          }
+        }
+      }
+    }
+  }
+}
