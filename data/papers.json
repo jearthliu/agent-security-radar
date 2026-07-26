@@ -1,0 +1,45 @@
+{
+  "report_date": "2026-07-26",
+  "window": {
+    "start": "2026-07-19",
+    "end": "2026-07-26",
+    "timezone": "Asia/Shanghai"
+  },
+  "papers": [
+    {
+      "arxiv_id": "2607.21325",
+      "title": "Toward cryptographically verifiable authorization for autonomous AI agents: A security hypothesis, preliminary formal model, and proof-of-concept implementation",
+      "submitted": "2026-07-23",
+      "lifecycle_stages": ["authorization", "execution"],
+      "url": "https://arxiv.org/abs/2607.21325"
+    },
+    {
+      "arxiv_id": "2607.20759",
+      "title": "IssueTrojanBench: Benchmarking AI Coding Agents Against Malicious Issue Requests",
+      "submitted": "2026-07-22",
+      "lifecycle_stages": ["input", "planning", "tool-execution"],
+      "url": "https://arxiv.org/abs/2607.20759"
+    },
+    {
+      "arxiv_id": "2607.20581",
+      "title": "Geometric Configurations of Perturbed Jailbreak Prompts",
+      "submitted": "2026-07-22",
+      "lifecycle_stages": ["input", "model-response"],
+      "url": "https://arxiv.org/abs/2607.20581"
+    },
+    {
+      "arxiv_id": "2607.17152",
+      "title": "How Jailbreak Attacks Inform Safety Alignment: A Defender-Centric, Shapley-Based Evaluation of Jailbreak Contributions",
+      "submitted": "2026-07-19",
+      "lifecycle_stages": ["evaluation", "red-teaming", "safety-training"],
+      "url": "https://arxiv.org/abs/2607.17152"
+    },
+    {
+      "arxiv_id": "2607.17535",
+      "title": "Salience Induction against Multi-Hop RAG Agents: Threat and Defense",
+      "submitted": "2026-07-20",
+      "lifecycle_stages": ["retrieval", "context", "reasoning"],
+      "url": "https://arxiv.org/abs/2607.17535"
+    }
+  ]
+}
