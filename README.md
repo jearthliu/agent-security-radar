@@ -2,37 +2,36 @@
 
 A practical research radar for turning agent-security papers and incidents into engineering controls.
 
+## Latest radar
+
+**[2026-07-26 · Authorization, malicious issues, jailbreak evaluation, and RAG salience](reports/2026-07-26.md)**
+
+Five direct-source papers are mapped to the agent lifecycle with facts, engineering interpretation, and explicit unknowns.
+
+## Use the repository
+
+| Resource | Purpose |
+|---|---|
+| [Latest report](reports/2026-07-26.md) | A reviewed seven-day radar with exactly five items |
+| [Risk taxonomy](docs/risk-taxonomy.md) | Threats and controls across the agent lifecycle |
+| [Research method](docs/research-method.md) | Source, inclusion, evidence, and stop rules |
+| [Paper catalog](data/papers.json) | Machine-readable metadata for reviewed papers |
+| [Report template](templates/radar-report.md) | Reusable daily or weekly format |
+| [Catalog validator](scripts/validate_catalog.py) | Lightweight structural validation |
+| [Contributing](CONTRIBUTING.md) | How to propose a paper or correction |
+
 ## Scope
 
-The radar tracks risks created when AI agents can read untrusted content, call tools, retain memory, coordinate with other agents, or take actions in external systems.
+The radar tracks risks created when AI agents read untrusted content, call tools, retain memory, coordinate with other agents, or act in external systems.
 
-| Area | Questions |
+| Area | Core question |
 |---|---|
 | Prompt injection | Can untrusted content redirect the agent? |
 | Tool use | Is every capability scoped, authorized, and auditable? |
-| Memory and retrieval | Can poisoned or sensitive context persist? |
+| Memory and retrieval | Can poisoned, true-but-misleading, or sensitive context persist? |
 | Multi-agent systems | Can authority or misinformation propagate between agents? |
 | Data security | Can secrets cross an unintended boundary? |
 | Execution safety | Does uncertainty stop real-world actions? |
-
-## Research workflow
-
-```mermaid
-flowchart LR
-    S["Direct sources"] --> C["Candidate set"]
-    C --> V["Verify date and claims"]
-    V --> T["Threat stage mapping"]
-    T --> E["Engineering control"]
-    E --> R["Radar report"]
-```
-
-Each included item should answer:
-
-1. What new capability or failure mode is demonstrated?
-2. Which stage of the agent lifecycle is affected?
-3. What evidence supports the claim?
-4. What can an engineering team change now?
-5. What remains unknown?
 
 ## Lifecycle model
 
@@ -41,23 +40,23 @@ Input → Context → Planning → Tool selection → Authorization
       → Execution → External state → Reconciliation → Memory
 ```
 
-A report should map findings to one or more stages instead of using “agent safety” as a single undifferentiated category.
+Findings are mapped to one or more stages rather than grouped under an undifferentiated “AI safety” label.
 
 ## Editorial rules
 
 - Prefer papers, advisories, repositories, and incident reports from direct sources.
-- Separate verified facts, interpretation, and unknowns.
-- Avoid treating benchmark performance as production safety.
-- Record publication date and event date separately when they differ.
-- Link every recommended control to a concrete risk.
-- Keep real-world actions fail-closed when authorization or external state is uncertain.
+- Keep a fixed research window and avoid backfilling weak items to reach a count.
+- Separate source-reported facts, engineering interpretation, and unknowns.
+- Do not treat benchmark performance as production safety.
+- Link each recommended control to a concrete risk and lifecycle stage.
+- Keep consequential actions fail-closed when identity, authorization, data, or external state is uncertain.
 
-## Repository structure
+## Validate the catalog
 
-- `docs/risk-taxonomy.md` — threat and control taxonomy
-- `templates/radar-report.md` — reusable daily/weekly report format
-- `SECURITY.md` — responsible disclosure and sensitive-data boundary
+```bash
+python3 scripts/validate_catalog.py data/papers.json
+```
 
-## Status
+The validator checks structure, unique identifiers, direct HTTPS sources, and the exact-five invariant used by the current public report.
 
-The public taxonomy and report format are available now. Reviewed radar entries will be added incrementally.
+> Direct sources first. Facts, inference, and unknowns stay separate.
